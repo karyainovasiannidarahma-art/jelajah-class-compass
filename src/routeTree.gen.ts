@@ -10,33 +10,186 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as MainRouteImport } from './routes/_main'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedGuruRouteImport } from './routes/_authenticated/guru'
+import { Route as MainBerandaRouteImport } from './routes/_main.beranda'
+import { Route as MainDiagnostikRouteImport } from './routes/_main.diagnostik'
+import { Route as MainLevel1RouteImport } from './routes/_main.level-1'
+import { Route as MainLevel2RouteImport } from './routes/_main.level-2'
+import { Route as MainLevel3RouteImport } from './routes/_main.level-3'
+import { Route as MainMateriRouteImport } from './routes/_main.materi'
+import { Route as MainModulBRouteImport } from './routes/_main.modul-b'
+import { Route as MainRefleksiRouteImport } from './routes/_main.refleksi'
+import { Route as MainUjiRouteImport } from './routes/_main.uji'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainRoute = MainRouteImport.update({
+  id: '/_main',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedGuruRoute = AuthenticatedGuruRouteImport.update({
+  id: '/guru',
+  path: '/guru',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const MainBerandaRoute = MainBerandaRouteImport.update({
+  id: '/beranda',
+  path: '/beranda',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainDiagnostikRoute = MainDiagnostikRouteImport.update({
+  id: '/diagnostik',
+  path: '/diagnostik',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainLevel1Route = MainLevel1RouteImport.update({
+  id: '/level-1',
+  path: '/level-1',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainLevel2Route = MainLevel2RouteImport.update({
+  id: '/level-2',
+  path: '/level-2',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainLevel3Route = MainLevel3RouteImport.update({
+  id: '/level-3',
+  path: '/level-3',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMateriRoute = MainMateriRouteImport.update({
+  id: '/materi',
+  path: '/materi',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainModulBRoute = MainModulBRouteImport.update({
+  id: '/modul-b',
+  path: '/modul-b',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainRefleksiRoute = MainRefleksiRouteImport.update({
+  id: '/refleksi',
+  path: '/refleksi',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainUjiRoute = MainUjiRouteImport.update({
+  id: '/uji',
+  path: '/uji',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/guru': typeof AuthenticatedGuruRoute
+  '/beranda': typeof MainBerandaRoute
+  '/diagnostik': typeof MainDiagnostikRoute
+  '/level-1': typeof MainLevel1Route
+  '/level-2': typeof MainLevel2Route
+  '/level-3': typeof MainLevel3Route
+  '/materi': typeof MainMateriRoute
+  '/modul-b': typeof MainModulBRoute
+  '/refleksi': typeof MainRefleksiRoute
+  '/uji': typeof MainUjiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/guru': typeof AuthenticatedGuruRoute
+  '/beranda': typeof MainBerandaRoute
+  '/diagnostik': typeof MainDiagnostikRoute
+  '/level-1': typeof MainLevel1Route
+  '/level-2': typeof MainLevel2Route
+  '/level-3': typeof MainLevel3Route
+  '/materi': typeof MainMateriRoute
+  '/modul-b': typeof MainModulBRoute
+  '/refleksi': typeof MainRefleksiRoute
+  '/uji': typeof MainUjiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_main': typeof MainRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/guru': typeof AuthenticatedGuruRoute
+  '/_main/beranda': typeof MainBerandaRoute
+  '/_main/diagnostik': typeof MainDiagnostikRoute
+  '/_main/level-1': typeof MainLevel1Route
+  '/_main/level-2': typeof MainLevel2Route
+  '/_main/level-3': typeof MainLevel3Route
+  '/_main/materi': typeof MainMateriRoute
+  '/_main/modul-b': typeof MainModulBRoute
+  '/_main/refleksi': typeof MainRefleksiRoute
+  '/_main/uji': typeof MainUjiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/guru'
+    | '/beranda'
+    | '/diagnostik'
+    | '/level-1'
+    | '/level-2'
+    | '/level-3'
+    | '/materi'
+    | '/modul-b'
+    | '/refleksi'
+    | '/uji'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/guru'
+    | '/beranda'
+    | '/diagnostik'
+    | '/level-1'
+    | '/level-2'
+    | '/level-3'
+    | '/materi'
+    | '/modul-b'
+    | '/refleksi'
+    | '/uji'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_main'
+    | '/auth'
+    | '/_authenticated/guru'
+    | '/_main/beranda'
+    | '/_main/diagnostik'
+    | '/_main/level-1'
+    | '/_main/level-2'
+    | '/_main/level-3'
+    | '/_main/materi'
+    | '/_main/modul-b'
+    | '/_main/refleksi'
+    | '/_main/uji'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  MainRoute: typeof MainRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +201,142 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof MainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/guru': {
+      id: '/_authenticated/guru'
+      path: '/guru'
+      fullPath: '/guru'
+      preLoaderRoute: typeof AuthenticatedGuruRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_main/beranda': {
+      id: '/_main/beranda'
+      path: '/beranda'
+      fullPath: '/beranda'
+      preLoaderRoute: typeof MainBerandaRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/diagnostik': {
+      id: '/_main/diagnostik'
+      path: '/diagnostik'
+      fullPath: '/diagnostik'
+      preLoaderRoute: typeof MainDiagnostikRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/level-1': {
+      id: '/_main/level-1'
+      path: '/level-1'
+      fullPath: '/level-1'
+      preLoaderRoute: typeof MainLevel1RouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/level-2': {
+      id: '/_main/level-2'
+      path: '/level-2'
+      fullPath: '/level-2'
+      preLoaderRoute: typeof MainLevel2RouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/level-3': {
+      id: '/_main/level-3'
+      path: '/level-3'
+      fullPath: '/level-3'
+      preLoaderRoute: typeof MainLevel3RouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/materi': {
+      id: '/_main/materi'
+      path: '/materi'
+      fullPath: '/materi'
+      preLoaderRoute: typeof MainMateriRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/modul-b': {
+      id: '/_main/modul-b'
+      path: '/modul-b'
+      fullPath: '/modul-b'
+      preLoaderRoute: typeof MainModulBRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/refleksi': {
+      id: '/_main/refleksi'
+      path: '/refleksi'
+      fullPath: '/refleksi'
+      preLoaderRoute: typeof MainRefleksiRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/uji': {
+      id: '/_main/uji'
+      path: '/uji'
+      fullPath: '/uji'
+      preLoaderRoute: typeof MainUjiRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedGuruRoute: typeof AuthenticatedGuruRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedGuruRoute: AuthenticatedGuruRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface MainRouteChildren {
+  MainBerandaRoute: typeof MainBerandaRoute
+  MainDiagnostikRoute: typeof MainDiagnostikRoute
+  MainLevel1Route: typeof MainLevel1Route
+  MainLevel2Route: typeof MainLevel2Route
+  MainLevel3Route: typeof MainLevel3Route
+  MainMateriRoute: typeof MainMateriRoute
+  MainModulBRoute: typeof MainModulBRoute
+  MainRefleksiRoute: typeof MainRefleksiRoute
+  MainUjiRoute: typeof MainUjiRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainBerandaRoute: MainBerandaRoute,
+  MainDiagnostikRoute: MainDiagnostikRoute,
+  MainLevel1Route: MainLevel1Route,
+  MainLevel2Route: MainLevel2Route,
+  MainLevel3Route: MainLevel3Route,
+  MainMateriRoute: MainMateriRoute,
+  MainModulBRoute: MainModulBRoute,
+  MainRefleksiRoute: MainRefleksiRoute,
+  MainUjiRoute: MainUjiRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  MainRoute: MainRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
