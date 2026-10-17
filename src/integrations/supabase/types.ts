@@ -14,13 +14,146 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activities: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          payload: Json
+          score: number | null
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          payload?: Json
+          score?: number | null
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          payload?: Json
+          score?: number | null
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activities_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      class_tokens: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          extras: Json
+          focus_page: string
+          id: string
+          label: string | null
+          message: string | null
+          mode: string
+          quiz_url: string | null
+          teacher_id: string
+          unlocked: string[]
+          video_url: string | null
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          extras?: Json
+          focus_page?: string
+          id?: string
+          label?: string | null
+          message?: string | null
+          mode?: string
+          quiz_url?: string | null
+          teacher_id?: string
+          unlocked?: string[]
+          video_url?: string | null
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          extras?: Json
+          focus_page?: string
+          id?: string
+          label?: string | null
+          message?: string | null
+          mode?: string
+          quiz_url?: string | null
+          teacher_id?: string
+          unlocked?: string[]
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      students: {
+        Row: {
+          created_at: string
+          current_page: string | null
+          id: string
+          last_seen: string | null
+          nickname: string
+          token_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_page?: string | null
+          id?: string
+          last_seen?: string | null
+          nickname: string
+          token_id: string
+        }
+        Update: {
+          created_at?: string
+          current_page?: string | null
+          id?: string
+          last_seen?: string | null
+          nickname?: string
+          token_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_token_id_fkey"
+            columns: ["token_id"]
+            isOneToOne: false
+            referencedRelation: "class_tokens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      record_activity: {
+        Args: {
+          _kind: string
+          _payload: Json
+          _score: number
+          _student_id: string
+        }
+        Returns: undefined
+      }
+      student_join: {
+        Args: { _code: string; _nickname: string }
+        Returns: string
+      }
+      student_sync: {
+        Args: { _page: string; _student_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
