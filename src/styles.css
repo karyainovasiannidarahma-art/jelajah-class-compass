@@ -168,3 +168,27 @@
   background: var(--card); padding: .75rem 1rem; outline: none;
   &:focus { border-color: var(--ring); }
 }
+
+.measure-room { aspect-ratio: 800 / 520; }
+.room-object-p encil { display: block; }
+.room-object-pencil { left: 61%; top: 47%; width: 19%; height: 8%; }
+.room-object-book { left: 74%; top: 35%; width: 13%; height: 12%; }
+.room-object-eraser { left: 85%; top: 49%; width: 10%; height: 7%; }
+.room-object-wardrobe { left: 5%; top: 17%; width: 24%; height: 57%; }
+.room-object-bed { left: 29%; top: 57%; width: 34%; height: 31%; }
+.room-object-desk { left: 64%; top: 55%; width: 31%; height: 25%; }
+.room-object svg { pointer-events: none; width: 100%; height: 100%; }
+.room-object:hover, .room-object:focus-visible { z-index: 10; filter: drop-shadow(0 3px 0 var(--primary)); }
+.room-object-label { opacity: 0; pointer-events: none; }
+.room-object:hover .room-object-label, .room-object:focus-visible .room-object-label { opacity: 1; }
+.measure-progress-0 { width: 0; }
+.measure-progress-1 { width: 16.667%; }
+.measure-progress-2 { width: 33.333%; }
+.measure-progress-3 { width: 50%; }
+.measure-progress-4 { width: 66.667%; }
+.measure-progress-5 { width: 83.333%; }
+.measure-progress-6 { width: 100%; }
+.measurement-art { min-height: 150px; }
+@media (prefers-reduced-motion: reduce) {
+  .measure-progress { transition: none; }
+}
