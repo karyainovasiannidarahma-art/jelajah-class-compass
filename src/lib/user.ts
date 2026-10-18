@@ -31,7 +31,7 @@ export type ActivityKind = "diagnostik" | "level-1" | "level-2" | "level-3" | "u
 export async function recordActivity(kind: ActivityKind, score: number | null, payload: Record<string, unknown> = {}, requireSaved = false) {
   if (requireSaved) {
     const sid = localStorage.getItem(SID);
-    if (!sid) throw new Error("La session élève n'est plus active.");
+    if (!sid) throw new Error("Sesi siswa tidak aktif. Silakan masuk kembali.");
     const { error } = await supabase.rpc("record_activity", { _student_id: sid, _kind: kind, _score: score as number, _payload: payload as Json });
     if (error) throw error;
     if (["level-1", "level-2", "level-3", "modul-b"].includes(kind)) markDone(kind);
