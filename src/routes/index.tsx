@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Aplikasi belajar mengukur panjang dalam sentimeter untuk siswa kelas 3 SDN Pabelan 02." },
       { property: "og:title", content: "Jelajah Sentimeter — Belajar Mengukur Panjang" },
       { property: "og:description", content: "Aplikasi belajar mengukur panjang dalam sentimeter untuk siswa kelas 3 SD." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Login,

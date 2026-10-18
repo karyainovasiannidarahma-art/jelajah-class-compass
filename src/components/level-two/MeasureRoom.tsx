@@ -68,7 +68,7 @@ export function MeasureRoom() {
     if (!challenges.every((c, i) => parseLength(answers[i] ?? '') === c.answer)) return;
     setSaveState('saving');
     try {
-      await recordActivity('level-2', 9, { info: 'Find & Measure: 6 benda dan 3 soal', measurements: objects.map(o => ({ name: o.name, length: o.length, unit: o.unit })), answers: answers.map(parseLength), attempts: attempts.current });
+      await recordActivity('level-2', 9, { info: 'Find & Measure: 6 benda dan 3 soal', measurements: objects.map(o => ({ name: o.name, length: o.length, unit: o.unit })), answers: answers.map(parseLength), attempts: attempts.current }, true);
       setSaveState('saved'); celebrate(true);
     } catch { setSaveState('error'); }
   };

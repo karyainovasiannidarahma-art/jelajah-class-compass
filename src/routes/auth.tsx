@@ -9,6 +9,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Halaman masuk guru untuk mengelola token kelas dan melihat hasil belajar siswa." },
       { property: "og:title", content: "Masuk Guru — Jelajah Sentimeter" },
       { property: "og:description", content: "Kelola token kelas dan pantau hasil belajar siswa." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Auth,

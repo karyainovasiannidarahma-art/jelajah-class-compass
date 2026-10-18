@@ -170,7 +170,6 @@
 }
 
 .measure-room { aspect-ratio: 800 / 520; }
-.room-object-p encil { display: block; }
 .room-object-pencil { left: 61%; top: 47%; width: 19%; height: 8%; }
 .room-object-book { left: 74%; top: 35%; width: 13%; height: 12%; }
 .room-object-eraser { left: 85%; top: 49%; width: 10%; height: 7%; }

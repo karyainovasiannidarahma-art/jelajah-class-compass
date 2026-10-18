@@ -19,6 +19,8 @@ export const Route = createFileRoute("/_authenticated/guru")({
       { name: "description", content: "Kelola token kelas dan lihat hasil belajar siswa." },
       { property: "og:title", content: "Dasbor Guru — Jelajah Sentimeter" },
       { property: "og:description", content: "Kelola token kelas dan lihat hasil belajar siswa." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Guru,

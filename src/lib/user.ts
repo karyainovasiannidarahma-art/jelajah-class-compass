@@ -28,7 +28,16 @@ export function useName() {
 
 export type ActivityKind = "diagnostik" | "level-1" | "level-2" | "level-3" | "uji" | "refleksi" | "asesmen" | "prasyarat-b" | "modul-b";
 
-export async function recordActivity(kind: ActivityKind, score: number | null, payload: Record<string, unknown> = {}) {
+export async function recordActivity(kind: ActivityKind, score: number | null, payload: Record<string, unknown> = {}, requireSaved = false) {
+  if (requireSaved) {
+    const sid = localStorage.getItem(SID);
+    if (!sid) throw new Error("La session élève n'est plus active.");
+    const { error } = await supabase.rpc("record_activity", { _student_id: sid, _kind: kind, _score: score as number, _payload: payload as Json });
+    if (error) throw error;
+    if (["level-1", "level-2", "level-3", "modul-b"].includes(kind)) markDone(kind);
+    window.dispatchEvent(new Event("jelajah-update"));
+    return;
+  }
   if (["level-1", "level-2", "level-3", "modul-b"].includes(kind)) markDone(kind);
   if (kind === "diagnostik" && score != null) localStorage.setItem("jelajah-diag", String(score));
   window.dispatchEvent(new Event("jelajah-update"));
