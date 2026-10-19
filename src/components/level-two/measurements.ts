@@ -18,7 +18,7 @@ export function checkMeasurement(item: MeasureObject, value: string, unit: strin
   return parseLength(value) === item.length ? 'correct' : 'length';
 }
 export const challenges = [
-  { question: 'Berapa selisih panjang buku dan pensil?', answer: 7.5, unit: 'cm' },
-  { question: 'Berapa selisih panjang tempat tidur dan meja belajar?', answer: 0.5, unit: 'm' },
-  { question: 'Berapa total panjang pensil dan penghapus?', answer: 17, unit: 'cm' },
+  { question: 'Berapa selisih panjang buku dan pensil?', answer: 7.5, unit: 'cm', compare: ['book', 'pencil'] },
+  { question: 'Berapa selisih panjang tempat tidur dan meja belajar?', answer: 0.5, unit: 'm', compare: ['bed', 'desk'] },
+  { question: 'Berapa total panjang pensil dan penghapus?', answer: 17, unit: 'cm', compare: null },
 ] as const;
