@@ -21,8 +21,8 @@ export function createBacksound() {
   const schedule = () => {
     if (!ctx) return;
     while (next < ctx.currentTime + 0.6) {
-      note(melody[step % melody.length], next, 0.45, 0.18, 'triangle');
-      if (step % 4 === 0) note(bass[(step / 4) % bass.length], next, 1.1, 0.12, 'sine');
+      note(melody[step % melody.length]!, next, 0.45, 0.18, 'triangle');
+      if (step % 4 === 0) note(bass[(step / 4) % bass.length]!, next, 1.1, 0.12, 'sine');
       next += STEP; step += 1;
     }
   };
