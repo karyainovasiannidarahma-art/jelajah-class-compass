@@ -169,15 +169,18 @@
   &:focus { border-color: var(--ring); }
 }
 
-.measure-room { aspect-ratio: 800 / 520; }
-.room-object-pencil { left: 61%; top: 47%; width: 19%; height: 8%; }
-.room-object-book { left: 74%; top: 35%; width: 13%; height: 12%; }
-.room-object-eraser { left: 85%; top: 49%; width: 10%; height: 7%; }
-.room-object-wardrobe { left: 5%; top: 17%; width: 24%; height: 57%; }
-.room-object-bed { left: 29%; top: 57%; width: 34%; height: 31%; }
-.room-object-desk { left: 64%; top: 55%; width: 31%; height: 25%; }
-.room-object svg { pointer-events: none; width: 100%; height: 100%; }
-.room-object:hover, .room-object:focus-visible { z-index: 10; filter: drop-shadow(0 3px 0 var(--primary)); }
+.measure-room { aspect-ratio: 1536 / 1008; }
+.room-object-pencil { left: 79%; top: 48%; width: 8%; height: 5%; }
+.room-object-book { left: 86%; top: 48%; width: 9%; height: 7%; }
+.room-object-eraser { left: 82%; top: 53%; width: 6%; height: 4%; }
+.room-object-wardrobe { left: 0%; top: 9%; width: 21%; height: 68%; }
+.room-object-bed { left: 21%; top: 42%; width: 54%; height: 39%; }
+.room-object-desk { left: 77%; top: 57%; width: 22%; height: 26%; }
+.room-object { border-radius: 1rem; transition: transform .2s, background .2s; }
+.room-pin { animation: pin-float 2.2s ease-in-out infinite; box-shadow: 0 0 0 4px color-mix(in oklab, var(--sun) 60%, transparent), 0 0 18px var(--sun); }
+.room-object-done .room-pin { opacity: .35; animation: none; }
+.room-object:hover, .room-object:focus-visible { z-index: 10; background: color-mix(in oklab, var(--sun) 22%, transparent) !important; outline: 3px dashed var(--sun); }
+@keyframes pin-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
 .room-object-label { opacity: 0; pointer-events: none; }
 .room-object:hover .room-object-label, .room-object:focus-visible .room-object-label { opacity: 1; }
 .measure-progress-0 { width: 0; }
