@@ -169,7 +169,7 @@
   &:focus { border-color: var(--ring); }
 }
 
-.measure-room { aspect-ratio: 800 / 520; }
+.measure-room { aspect-ratio: 1536 / 1008; }
 .room-object-pencil { left: 79%; top: 48%; width: 8%; height: 5%; }
 .room-object-book { left: 86%; top: 48%; width: 9%; height: 7%; }
 .room-object-eraser { left: 82%; top: 53%; width: 6%; height: 4%; }
