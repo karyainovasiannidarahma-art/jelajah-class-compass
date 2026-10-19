@@ -5,28 +5,14 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { recordActivity } from '@/lib/user';
 import { celebrate } from '@/lib/fx';
 import { objects, challenges, checkMeasurement, formatLength, parseLength, type MeasureObject } from './measurements';
-import { ObjectArt, MeasurementArt } from './MeasurementArt';
+import roomImg from '@/assets/room-storybook.jpg';
+import { MeasurementArt } from './MeasurementArt';
 
 function RoomScene({ onSelect, done }: { onSelect: (item: MeasureObject) => void; done: string[] }) {
   return <div className="measure-room relative w-full overflow-hidden rounded-lg bg-sky-soft">
-    <svg viewBox="0 0 800 520" className="block h-full w-full" aria-hidden="true">
-      <rect width="800" height="520" fill="var(--sky-soft)"/>
-      <path d="M0 348H800V520H0Z" fill="var(--wood)"/>
-      <path d="M0 348H800M0 404H800M0 464H800M170 348L80 520M370 348L340 520M580 348L630 520" stroke="var(--accent-foreground)" strokeWidth="2" opacity=".25"/>
-      <rect x="278" y="36" width="176" height="145" rx="8" fill="var(--card)" stroke="var(--box-blue)" strokeWidth="7"/>
-      <rect x="290" y="47" width="152" height="122" fill="var(--sky)"/>
-      <circle cx="413" cy="76" r="19" fill="var(--sun)"/>
-      <path d="M294 153Q328 111 362 153Q407 109 442 151V170H294Z" fill="var(--success)"/>
-      <path d="M366 47V170M290 107H442" stroke="var(--card)" strokeWidth="7"/>
-      <path d="M265 30H307V191L265 175ZM426 30H468V175L426 191Z" fill="var(--pink-soft)" stroke="var(--primary)" strokeWidth="3"/>
-      <rect x="520" y="77" width="94" height="62" rx="5" fill="var(--card)" stroke="var(--sun)" strokeWidth="7"/>
-      <path d="M535 123L553 95L569 118L588 98L601 125Z" fill="var(--primary)"/>
-      <ellipse cx="371" cy="465" rx="172" ry="31" fill="var(--pink-soft)"/>
-      <path d="M555 220V176L528 212H579Z" fill="var(--sun)" stroke="var(--foreground)" strokeWidth="3"/>
-      <path d="M555 220V263M537 263H572" stroke="var(--foreground)" strokeWidth="4"/>
-    </svg>
+    <img src={roomImg} alt="Kamar tidur anak dengan lemari, kasur, meja belajar, pensil, penghapus, dan buku" width={1536} height={1008} className="block h-full w-full object-cover"/>
     {[...objects].reverse().map(item => <Button key={item.id} variant="ghost" className={`room-object room-object-${item.id} absolute h-auto p-0 hover:bg-transparent ${done.includes(item.id) ? 'room-object-done' : ''}`} aria-label={`Ukur ${item.name}`} title={`Ukur ${item.name}`} onClick={() => onSelect(item)}>
-      <svg viewBox="0 0 200 100" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true"><ObjectArt id={item.id}/></svg>
+      <span className="room-pin absolute left-1/2 top-1/2 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-card text-lg shadow-soft" aria-hidden="true">🔍</span>
       <span className="room-object-label absolute -top-5 left-1/2 -translate-x-1/2 rounded-md bg-card px-2 py-1 text-xs font-bold shadow-soft">{done.includes(item.id) ? '✓ ' : ''}{item.name}</span>
       {done.includes(item.id) && <span className="absolute -right-1 -top-1 rounded-full bg-success p-1 text-success-foreground"><Check className="size-3"/></span>}
     </Button>)}

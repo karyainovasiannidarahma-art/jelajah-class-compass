@@ -1,14 +1,16 @@
+import pencil from '@/assets/obj-pencil.png';
+import book from '@/assets/obj-book.png';
+import eraser from '@/assets/obj-eraser.png';
+import wardrobe from '@/assets/obj-wardrobe.png';
+import bed from '@/assets/obj-bed.png';
+import desk from '@/assets/obj-desk.png';
 import type { MeasureObject } from './measurements';
 import { formatLength } from './measurements';
 
+export const objectImages: Record<MeasureObject['id'], string> = { pencil, book, eraser, wardrobe, bed, desk };
+
 export function ObjectArt({ id }: { id: MeasureObject['id'] }) {
-  const line = { stroke: 'var(--foreground)', strokeWidth: 3, strokeLinejoin: 'round' as const };
-  if (id === 'pencil') return <g {...line}><path d="M4 37L30 18H172V62H30Z" fill="var(--sun)"/><path d="M4 37L30 18V62Z" fill="var(--wood)"/><path d="M4 37L14 30V45Z" fill="var(--foreground)"/><path d="M172 18H191Q198 18 198 25V55Q198 62 191 62H172Z" fill="var(--pink-soft)"/><path d="M35 33H165M35 47H165" stroke="var(--accent-foreground)" strokeWidth="2"/></g>;
-  if (id === 'book') return <g {...line}><rect x="8" y="10" width="184" height="75" rx="8" fill="var(--box-blue)"/><path d="M22 10V85"/><rect x="44" y="25" width="110" height="40" rx="4" fill="var(--card)"/><path d="M62 38H135M62 50H120" stroke="var(--box-blue)"/><path d="M20 78H183" stroke="var(--card)"/></g>;
-  if (id === 'eraser') return <g {...line}><rect x="4" y="20" width="192" height="56" rx="13" fill="var(--pink-soft)"/><path d="M66 20H156V76H66Z" fill="var(--sky)"/><path d="M82 36H137M82 48H126" stroke="var(--card)"/></g>;
-  if (id === 'wardrobe') return <g {...line}><rect x="9" y="4" width="182" height="86" rx="5" fill="var(--wood)"/><path d="M100 4V90M24 90V98M174 90V98"/><rect x="22" y="15" width="65" height="62" rx="3" fill="var(--sun-soft)"/><rect x="113" y="15" width="65" height="62" rx="3" fill="var(--sun-soft)"/><circle cx="80" cy="49" r="3" fill="var(--primary)"/><circle cx="120" cy="49" r="3" fill="var(--primary)"/></g>;
-  if (id === 'bed') return <g {...line}><rect x="4" y="8" width="36" height="78" rx="5" fill="var(--wood)"/><rect x="16" y="35" width="178" height="46" rx="8" fill="var(--card)"/><rect x="20" y="36" width="42" height="22" rx="8" fill="var(--sky-soft)"/><path d="M70 35H189Q196 35 196 43V75H70Z" fill="var(--primary)"/><path d="M84 36V74M102 36V74M120 36V74M138 36V74M156 36V74M174 36V74" stroke="var(--pink-soft)"/><path d="M12 80H196V88H12ZM20 88V98M185 88V98" fill="var(--wood)"/></g>;
-  return <g {...line}><rect x="3" y="8" width="194" height="16" rx="4" fill="var(--wood)"/><path d="M15 24V96H26V24M173 24V96H185V24" fill="var(--wood)"/><rect x="117" y="24" width="55" height="48" rx="3" fill="var(--sky-soft)"/><path d="M117 48H172M139 36H151M139 60H151"/></g>;
+  return <image href={objectImages[id]} x="0" y="0" width="200" height="100" preserveAspectRatio="none"/>;
 }
 
 export function MeasurementArt({ length, max, unit, id = 'pencil', reveal = false, magnify = false }: { length: number; max: number; unit: string; id?: MeasureObject['id']; reveal?: boolean; magnify?: boolean }) {
