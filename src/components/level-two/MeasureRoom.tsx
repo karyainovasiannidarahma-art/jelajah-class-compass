@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react';
-import { Check, Ruler, RotateCcw, Star, ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { DifferenceHelp } from './DifferenceHelp';
+import { createBacksound } from './backsound';
+import { Check, Lock, RotateCcw, Star, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { recordActivity } from '@/lib/user';
@@ -30,6 +32,15 @@ export function MeasureRoom() {
   const [answers, setAnswers] = useState(['', '', '']);
   const [checked, setChecked] = useState(false);
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [help, setHelp] = useState<number | null>(null);
+  const [soundOn, setSoundOn] = useState(false);
+  const sound = useRef<ReturnType<typeof createBacksound> | null>(null);
+  useEffect(() => () => sound.current?.dispose(), []);
+  const toggleSound = () => {
+    sound.current ??= createBacksound();
+    if (soundOn) sound.current.stop(); else sound.current.start();
+    setSoundOn(!soundOn);
+  };
   const attempts = useRef(0);
   const allDone = done.length === objects.length;
   const select = (item: MeasureObject) => { setSelected(item); setValue(''); setUnit(''); setFeedback(''); setCorrect(false); };
@@ -61,14 +72,22 @@ export function MeasureRoom() {
   return <div className="space-y-5">
     <div className="flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-2xl font-bold">🔍 Find & Measure</h2><p className="text-muted-foreground">Misi: ukur enam benda di kamar!</p></div><span className="rounded-full bg-sun-soft px-4 py-2 font-display font-bold">⭐ {done.length} / 6 benda</span></div>
     <div className="h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-label="Benda terukur" aria-valuenow={done.length} aria-valuemin={0} aria-valuemax={6}><div className={`measure-progress measure-progress-${done.length} h-full bg-success transition-all`}/></div>
-    <RoomScene onSelect={select} done={done}/>
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-      {objects.map(item => <Button key={item.id} variant={done.includes(item.id) ? 'secondary' : 'outline'} className="h-auto justify-start whitespace-normal py-3" onClick={() => select(item)}>{done.includes(item.id) ? <Check className="text-success"/> : <Ruler/>}<span>{item.name}{done.includes(item.id) && <span className="block text-xs text-muted-foreground">{formatLength(item.length)} {item.unit}</span>}</span></Button>)}
+    <div className="relative">
+      <RoomScene onSelect={select} done={done}/>
+      <Button size="icon" variant="secondary" className="absolute right-3 top-3 z-10 rounded-full shadow-soft" aria-label={soundOn ? 'Matikan musik' : 'Nyalakan musik'} aria-pressed={soundOn} onClick={toggleSound}>{soundOn ? <Volume2/> : <VolumeX/>}</Button>
     </div>
+    <h3 className="font-display text-lg font-bold">🧭 Checklist Penjelajah</h3>
+    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+      {objects.map(item => <li key={item.id} className={`flex items-center gap-2 rounded-lg border border-border p-3 ${done.includes(item.id) ? 'bg-secondary' : 'text-muted-foreground'}`}>{done.includes(item.id) ? <Check className="size-4 text-success"/> : <Lock className="size-4"/>}<span>{done.includes(item.id) ? item.name : 'Cari di kamar…'}</span></li>)}
+    </ul>
     {allDone && <section className="space-y-4 border-t border-border pt-6">
       <h3 className="text-2xl font-bold">🌟 Tantangan Penjelajah</h3>
-      <p>Gunakan hasil pengukuranmu di atas.</p>
-      {challenges.map((c, i) => <div key={c.question} className="space-y-2"><label htmlFor={`challenge-${i}`} className="block font-semibold">{i + 1}. {c.question}</label><div className="flex items-center gap-2"><input id={`challenge-${i}`} inputMode="decimal" className="field-fun max-w-36" value={answers[i]} disabled={saveState === 'saved'} onChange={e => { setAnswers(prev => prev.map((v, j) => j === i ? e.target.value : v)); setChecked(false); }}/><span>{c.unit}</span>{checked && <span className={parseLength(answers[i] ?? '') === c.answer ? 'text-success' : 'text-destructive'}>{parseLength(answers[i] ?? '') === c.answer ? '✓ Benar' : 'Coba hitung lagi'}</span>}</div></div>)}
+      <div className="rounded-lg border border-border bg-card p-4">
+        <h4 className="mb-2 font-display text-lg font-bold">📋 Catatan Hasil Pengukuranmu</h4>
+        <table className="w-full text-left"><tbody>{objects.map(o => <tr key={o.id} className="border-t border-border"><td className="py-1">{o.emoji} {o.name}</td><td className="py-1 text-right font-bold">{formatLength(o.length)} {o.unit}</td></tr>)}</tbody></table>
+      </div>
+      <p>Gunakan catatan di atas untuk menjawab.</p>
+      {challenges.map((c, i) => <div key={c.question} className="space-y-2"><label htmlFor={`challenge-${i}`} className="block font-semibold">{i + 1}. {c.question}</label><div className="flex items-center gap-2"><input id={`challenge-${i}`} inputMode="decimal" className="field-fun max-w-36" value={answers[i]} disabled={saveState === 'saved'} onChange={e => { setAnswers(prev => prev.map((v, j) => j === i ? e.target.value : v)); setChecked(false); }}/><span>{c.unit}</span>{checked && <span className={parseLength(answers[i] ?? '') === c.answer ? 'text-success' : 'text-destructive'}>{parseLength(answers[i] ?? '') === c.answer ? '✓ Benar' : 'Coba hitung lagi'}</span>}</div>{c.compare && <Button type="button" variant="ghost" size="sm" onClick={() => setHelp(help === i ? null : i)}>💡 {help === i ? 'Tutup bantuan' : 'Butuh bantuan selisih?'}</Button>}{c.compare && help === i && <DifferenceHelp a={objects.find(o => o.id === c.compare[0])!} b={objects.find(o => o.id === c.compare[1])!}/>}</div>)}
       <Button onClick={finish} disabled={saveState === 'saving' || saveState === 'saved'}><Star/>{saveState === 'saving' ? 'Menyimpan…' : saveState === 'saved' ? 'Level 2 selesai!' : 'Periksa & selesaikan'}</Button>
       {saveState === 'saved' && <p role="status" className="font-semibold text-success">🎉 Hebat! Nilaimu 9 dari 9, hasilnya sudah tersimpan.</p>}
       {saveState === 'error' && <p role="alert" className="text-destructive">Hasil belum tersimpan. Coba tekan tombol sekali lagi.</p>}
