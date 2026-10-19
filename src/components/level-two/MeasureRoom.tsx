@@ -50,7 +50,7 @@ export function MeasureRoom() {
     const result = checkMeasurement(selected, value, unit);
     if (result === 'number') { setFeedback('Tulis angka panjangnya dulu, ya. Untuk koma, tulis misalnya 3,5.'); return; }
     if (result === 'unit') { setFeedback(!unit ? 'Pilih satuan cm atau m dulu, ya!' : selected.unit === 'm' ? `${selected.name} termasuk benda besar. Coba gunakan meter (m)!` : `${selected.name} termasuk benda kecil. Coba gunakan sentimeter (cm)!`); return; }
-    if (result === 'length') { setFeedback('Lihat garis merah di ujung benda. Kalau di tengah dua angka, jangan lupa koma lima!'); return; }
+    if (result === 'length') { setFeedback('Lihat garis merah di ujung benda. Baca angka besarnya dengan teliti, ya!'); return; }
     setCorrect(true);
     setFeedback(`Benar! Panjang ${selected.name.toLowerCase()} = ${formatLength(selected.length)} ${selected.unit}.`);
     if (!done.includes(selected.id)) {
