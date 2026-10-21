@@ -79,8 +79,9 @@ export function MeasureRoom() {
       <Button size="icon" variant="secondary" className="absolute right-3 top-3 z-10 rounded-full shadow-soft" aria-label={soundOn ? 'Matikan musik' : 'Nyalakan musik'} aria-pressed={soundOn} onClick={toggleSound}>{soundOn ? <Volume2/> : <VolumeX/>}</Button>
     </div>
     <h3 className="font-display text-lg font-bold">🧭 Checklist Penjelajah</h3>
-    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-      {objects.map(item => <li key={item.id} className={`flex items-center gap-2 rounded-lg border border-border p-3 ${done.includes(item.id) ? 'bg-secondary' : 'text-muted-foreground'}`}>{done.includes(item.id) ? <Check className="size-4 text-success"/> : <Lock className="size-4"/>}<span>{done.includes(item.id) ? item.name : 'Cari di kamar…'}</span></li>)}
+    <p className="text-sm text-muted-foreground">Ini benda yang harus kamu temukan. Ketuk tanda 🔍-nya di gambar kamar untuk mengukur.</p>
+    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      {objects.map(item => <li key={item.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 ${done.includes(item.id) ? 'bg-secondary' : ''}`}>{done.includes(item.id) ? <Check className="size-4 shrink-0 text-success"/> : <Lock className="size-4 shrink-0 text-muted-foreground"/>}<span className="text-xl" aria-hidden="true">{item.emoji}</span><span className="min-w-0"><span className="block font-semibold">{item.name}</span><span className={`block text-xs ${done.includes(item.id) ? 'text-success' : 'text-muted-foreground'}`}>{done.includes(item.id) ? `✓ Terukur: ${formatLength(item.length)} ${item.unit}` : 'Cari di kamar…'}</span></span></li>)}
     </ul>
     {allDone && <section className="space-y-4 border-t border-border pt-6">
       <h3 className="text-2xl font-bold">🌟 Tantangan Penjelajah</h3>
