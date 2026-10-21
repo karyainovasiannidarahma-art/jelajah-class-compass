@@ -6,6 +6,11 @@ export const objects = [
   { id: 'bed', name: 'Tempat tidur', emoji: '🛏️', length: 2, unit: 'm', x: 29, y: 57, w: 34, h: 31 },
   { id: 'desk', name: 'Meja belajar', emoji: '🪑', length: 1, unit: 'm', x: 64, y: 55, w: 31, h: 25 },
 ] as const;
+
+export function canReflect(done: readonly string[], answers: readonly string[], saved: boolean) {
+  return saved && objects.every(item => done.includes(item.id)) &&
+    challenges.every((challenge, index) => parseLength(answers[index] ?? '') === challenge.answer);
+}
 export type MeasureObject = (typeof objects)[number];
 export function formatLength(n: number) { return String(n).replace('.', ','); }
 export function parseLength(value: string) {
