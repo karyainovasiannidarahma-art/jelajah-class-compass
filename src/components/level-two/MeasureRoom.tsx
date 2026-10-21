@@ -9,6 +9,8 @@ import { celebrate } from '@/lib/fx';
 import { objects, challenges, checkMeasurement, formatLength, parseLength, type MeasureObject } from './measurements';
 import roomImg from '@/assets/room-storybook.jpg';
 import { MeasurementArt } from './MeasurementArt';
+import { SelfAssess } from '@/components/SelfAssess';
+import { canReflect } from './measurements';
 
 function RoomScene({ onSelect, done }: { onSelect: (item: MeasureObject) => void; done: string[] }) {
   return <div className="measure-room relative w-full overflow-hidden rounded-lg bg-sky-soft">
@@ -62,7 +64,7 @@ export function MeasureRoom() {
   };
   const finish = async () => {
     setChecked(true);
-    if (!challenges.every((c, i) => parseLength(answers[i] ?? '') === c.answer)) return;
+    if (!allDone || !challenges.every((c, i) => parseLength(answers[i] ?? '') === c.answer)) return;
     setSaveState('saving');
     try {
       await recordActivity('level-2', 9, { info: 'Find & Measure: 6 benda dan 3 soal', measurements: objects.map(o => ({ name: o.name, length: o.length, unit: o.unit })), answers: answers.map(parseLength), attempts: attempts.current }, true);
@@ -87,12 +89,17 @@ export function MeasureRoom() {
         <table className="w-full text-left"><tbody>{objects.map(o => <tr key={o.id} className="border-t border-border"><td className="py-1">{o.emoji} {o.name}</td><td className="py-1 text-right font-bold">{formatLength(o.length)} {o.unit}</td></tr>)}</tbody></table>
       </div>
       <p>Gunakan catatan di atas untuk menjawab.</p>
-      {challenges.map((c, i) => <div key={c.question} className="space-y-2"><label htmlFor={`challenge-${i}`} className="block font-semibold">{i + 1}. {c.question}</label><div className="flex items-center gap-2"><input id={`challenge-${i}`} inputMode="decimal" className="field-fun max-w-36" value={answers[i]} disabled={saveState === 'saved'} onChange={e => { setAnswers(prev => prev.map((v, j) => j === i ? e.target.value : v)); setChecked(false); }}/><span>{c.unit}</span>{checked && <span className={parseLength(answers[i] ?? '') === c.answer ? 'text-success' : 'text-destructive'}>{parseLength(answers[i] ?? '') === c.answer ? '✓ Benar' : 'Coba hitung lagi'}</span>}</div>{c.compare && <Button type="button" variant="ghost" size="sm" onClick={() => setHelp(help === i ? null : i)}>💡 {help === i ? 'Tutup bantuan' : 'Butuh bantuan selisih?'}</Button>}{c.compare && help === i && <DifferenceHelp a={objects.find(o => o.id === c.compare[0])!} b={objects.find(o => o.id === c.compare[1])!}/>}</div>)}
+      {challenges.map((c, i) => {
+        const a = c.compare ? objects.find(o => o.id === c.compare[0]) : undefined;
+        const b = c.compare ? objects.find(o => o.id === c.compare[1]) : undefined;
+        return <div key={c.question} className="space-y-2"><label htmlFor={`challenge-${i}`} className="block font-semibold">{i + 1}. {c.question}</label><div className="flex items-center gap-2"><input id={`challenge-${i}`} inputMode="decimal" className="field-fun max-w-36" value={answers[i]} disabled={saveState === 'saved'} onChange={e => { setAnswers(prev => prev.map((v, j) => j === i ? e.target.value : v)); setChecked(false); }}/><span>{c.unit}</span>{checked && <span className={parseLength(answers[i] ?? '') === c.answer ? 'text-success' : 'text-destructive'}>{parseLength(answers[i] ?? '') === c.answer ? '✓ Benar' : 'Coba hitung lagi'}</span>}</div>{c.compare && <Button type="button" variant="ghost" size="sm" onClick={() => setHelp(help === i ? null : i)}>💡 {help === i ? 'Tutup bantuan' : 'Butuh bantuan selisih?'}</Button>}{a && b && help === i && <DifferenceHelp a={a} b={b}/>}</div>;
+      })}
       <Button onClick={finish} disabled={saveState === 'saving' || saveState === 'saved'}><Star/>{saveState === 'saving' ? 'Menyimpan…' : saveState === 'saved' ? 'Level 2 selesai!' : 'Periksa & selesaikan'}</Button>
       {saveState === 'saved' && <p role="status" className="font-semibold text-success">🎉 Hebat! Nilaimu 9 dari 9, hasilnya sudah tersimpan.</p>}
       {saveState === 'error' && <p role="alert" className="text-destructive">Hasil belum tersimpan. Coba tekan tombol sekali lagi.</p>}
     </section>}
     <Button variant="ghost" onClick={() => { setDone([]); setAnswers(['', '', '']); setChecked(false); setSaveState('idle'); attempts.current = 0; }}><RotateCcw/>Mulai ulang misi</Button>
+    {canReflect(done, answers, saveState === 'saved') && <SelfAssess from="level-2" options={["Cara memakai penggaris", "Mulai dari angka 0", "Membaca angka berkoma (,5)", "Mencari selisih panjang"]} nextTo="/level-3" nextLabel="Lanjut ke Level 3" />}
     <Dialog open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
       <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-lg">
         <DialogTitle className="pr-6 text-2xl">{selected?.emoji} Ukur {selected?.name}</DialogTitle>

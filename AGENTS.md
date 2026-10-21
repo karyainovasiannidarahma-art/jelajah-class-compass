@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep Level 2 demonstrations, room interaction, and shared measurement rules in focused modules under `src/components/level-two`; this keeps the route small and the answer rules independently testable.
+- Level 2 reuses the shared HelperBot without a separate AI integration, and mission reflection is owned by MeasureRoom using the shared completion predicate; this keeps chat behavior consistent and prevents reflection bypassing the mission.

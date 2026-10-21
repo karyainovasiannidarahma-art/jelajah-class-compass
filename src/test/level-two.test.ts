@@ -1,7 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { objects, parseLength, checkMeasurement, challenges } from '@/components/level-two/measurements';
+import { objects, parseLength, checkMeasurement, challenges, canReflect } from '@/components/level-two/measurements';
 
 describe('Level 2 measurement rules', () => {
+  it('opens reflection only after all six measurements and three correct challenges are saved', () => {
+    const done = objects.map(item => item.id);
+    expect(canReflect([], [], false)).toBe(false);
+    expect(canReflect(done.slice(0, 5), ['8', '1', '17'], true)).toBe(false);
+    expect(canReflect(done, ['8', '1', ''], true)).toBe(false);
+    expect(canReflect(done, ['7', '1', '17'], true)).toBe(false);
+    expect(canReflect(done, ['8', '1', '17'], false)).toBe(false);
+    expect(canReflect(done, ['8', '1', '17'], true)).toBe(true);
+  });
   it('accepts Indonesian half-unit decimals', () => { expect(parseLength('0,5')).toBe(0.5); expect(parseLength('7,5')).toBe(7.5); expect(parseLength('')).toBeNaN(); expect(parseLength('7,5,2')).toBeNaN(); });
   it('contains exactly three cm and three m objects', () => { expect(objects.filter(o => o.unit === 'cm')).toHaveLength(3); expect(objects.filter(o => o.unit === 'm')).toHaveLength(3); expect(objects.map(o => o.id)).toEqual(['pencil', 'book', 'eraser', 'wardrobe', 'bed', 'desk']); });
   it('keeps Find & Measure lengths as whole numbers', () => { expect(objects.every(o => Number.isInteger(o.length))).toBe(true); expect(objects.map(o => o.length)).toEqual([12, 20, 5, 2, 2, 1]); });
