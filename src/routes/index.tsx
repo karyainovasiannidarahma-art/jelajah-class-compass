@@ -25,7 +25,7 @@ function Login() {
   const [busy, setBusy] = useState(false);
   const nav = useNavigate();
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-sky-soft p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-4">
       <motion.form
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
