@@ -89,7 +89,7 @@ function Layout() {
           🚪 <span className="hidden md:inline">Keluar</span>
         </button>
       </aside>
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         <header className="flex justify-end p-4">
           <div className="rounded-full bg-accent px-5 py-2 font-display text-lg font-semibold text-accent-foreground shadow-pop">
             👋 Halo, {name ?? "..."}!

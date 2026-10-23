@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Html, OrbitControls, ContactShadows } from '@react-three/drei';
 import { Group, Vector3 } from 'three';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,16 @@ function readPalette(): Palette {
 }
 function Block({ position, size, color }: { position: [number, number, number]; size: [number, number, number]; color: string }) {
   return <mesh position={position} castShadow receiveShadow><boxGeometry args={size}/><meshStandardMaterial color={color} roughness={0.85}/></mesh>;
+}
+function FitCamera() {
+  const { camera, size } = useThree();
+  useEffect(() => {
+    const factor = Math.max(0.85, 0.95 / (size.width / size.height));
+    camera.position.set(11 * factor, 12 * factor, 15 * factor);
+    camera.lookAt(0, 0.7, 0);
+    camera.updateProjectionMatrix();
+  }, [camera, size.width, size.height]);
+  return null;
 }
 function ItemModel({ item, palette: p }: { item: ClassroomObject; palette: Palette }) {
   const id = item.id;
@@ -71,7 +81,7 @@ export default function ClassroomScene({ avatar, done, moving, onPick, onArrive 
   const pick = (e: ThreeEvent<MouseEvent>, item: ClassroomObject) => { e.stopPropagation(); if (!moving && !done.includes(item.id)) onPick(item); };
   return <div className="classroom-canvas relative" aria-label="Ruang kelas 3D">
     <Canvas shadows dpr={[1, 1.5]} camera={{ position: [11, 12, 15], fov: 44 }} gl={{ antialias: true }}>
-      <color attach="background" args={[p['sky-soft']]}/><ambientLight intensity={1.3}/><directionalLight position={[-3, 9, 4]} intensity={2} castShadow shadow-mapSize={[1024, 1024]}/>
+      <FitCamera/><color attach="background" args={[p['sky-soft']]}/><ambientLight intensity={1.3}/><directionalLight position={[-3, 9, 4]} intensity={2} castShadow shadow-mapSize={[1024, 1024]}/>
       <Block position={[0, -0.1, 0]} size={[11, 0.2, 11]} color={p.wood}/>
       {Array.from({ length: 12 }, (_, i) => <Block key={i} position={[-5 + i * 0.9, 0.005, 0]} size={[0.018, 0.01, 11]} color={p.background}/>)}
       <Block position={[0, 1.8, -5.3]} size={[11, 3.6, 0.18]} color={p.background}/>

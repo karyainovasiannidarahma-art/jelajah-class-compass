@@ -200,7 +200,7 @@
 .avatar-sun .avatar-body { background: var(--box-red); }
 .avatar-sky .avatar-body { background: var(--sky); }
 .avatar-legs { position: absolute; top: 78px; left: 13px; width: 40px; height: 30px; border-left: 15px solid var(--foreground); border-right: 15px solid var(--foreground); }
-@media (max-width: 640px) { .classroom-canvas { height: 520px; } }
+@media (max-width: 640px) { .classroom-canvas { height: 440px; } }
 @media (prefers-reduced-motion: reduce) {
   .measure-progress { transition: none; }
 }
