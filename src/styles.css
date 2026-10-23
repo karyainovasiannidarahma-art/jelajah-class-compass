@@ -193,6 +193,14 @@
 .measure-progress-5 { width: 83.333%; }
 .measure-progress-6 { width: 100%; }
 .measurement-art { min-height: 150px; }
+.classroom-canvas { width: 100%; height: 560px; min-height: 420px; overflow: hidden; }
+.avatar-preview { position: relative; display: block; width: 66px; height: 110px; }
+.avatar-head { position: absolute; width: 38px; height: 38px; border-radius: 50%; top: 2px; left: 14px; background: var(--wood); border-top: 12px solid var(--foreground); }
+.avatar-body { position: absolute; width: 50px; height: 42px; border-radius: 8px 8px 3px 3px; top: 39px; left: 8px; background: var(--primary); }
+.avatar-sun .avatar-body { background: var(--box-red); }
+.avatar-sky .avatar-body { background: var(--sky); }
+.avatar-legs { position: absolute; top: 78px; left: 13px; width: 40px; height: 30px; border-left: 15px solid var(--foreground); border-right: 15px solid var(--foreground); }
+@media (max-width: 640px) { .classroom-canvas { height: 440px; } }
 @media (prefers-reduced-motion: reduce) {
   .measure-progress { transition: none; }
 }
