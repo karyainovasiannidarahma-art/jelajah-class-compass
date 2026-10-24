@@ -37,7 +37,7 @@ function Login() {
           setBusy(false);
           if (error || !data) return setErr("Token tidak ditemukan atau tidak aktif. Tanya Bu/Pak Guru, ya!");
           saveSession(name.trim(), data);
-          nav({ to: "/beranda" });
+          nav({ to: "/pilih-mode" });
         }}
         className="card-fun w-full max-w-md space-y-5 p-8 text-center"
       >

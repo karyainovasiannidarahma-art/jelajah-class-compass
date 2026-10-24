@@ -26,7 +26,7 @@ export function useName() {
   return { name, ready };
 }
 
-export type ActivityKind = "diagnostik" | "level-1" | "level-2" | "level-3" | "uji" | "refleksi" | "asesmen" | "prasyarat-b" | "modul-b";
+export type ActivityKind = "diagnostik" | "level-1" | "level-2" | "level-3" | "uji" | "refleksi" | "asesmen" | "prasyarat-b" | "modul-b" | "game";
 
 export async function recordActivity(kind: ActivityKind, score: number | null, payload: Record<string, unknown> = {}, requireSaved = false) {
   if (requireSaved) {

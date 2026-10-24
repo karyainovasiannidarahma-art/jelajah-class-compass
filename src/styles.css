@@ -3,6 +3,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant short (@media (max-height: 480px));
 
 /*
  * Design system definition.
@@ -62,6 +63,9 @@
   --color-box-red: var(--box-red);
   --color-box-blue: var(--box-blue);
   --color-wood: var(--wood);
+  --color-grass: var(--grass);
+  --color-coral: var(--coral);
+  --color-berry: var(--berry);
   --shadow-pop: var(--shadow-pop);
   --shadow-soft: var(--shadow-soft);
   --font-display: "Grandstander", "Fredoka", cursive;
@@ -103,6 +107,9 @@
   --box-red: oklch(0.63 0.14 35);
   --box-blue: oklch(0.65 0.14 240);
   --wood: oklch(0.72 0.1 65);
+  --grass: oklch(0.6 0.1 140);
+  --coral: oklch(0.64 0.12 40);
+  --berry: oklch(0.58 0.09 15);
   --border: oklch(0.84 0.05 75);
   --input: oklch(0.84 0.05 75);
   --ring: oklch(0.58 0.11 145);
@@ -204,3 +211,14 @@
 @media (prefers-reduced-motion: reduce) {
   .measure-progress { transition: none; }
 }
+
+/* Coin quest game (mode game) */
+@utility btn-pop {
+  box-shadow: var(--shadow-pop);
+  transition: transform .1s;
+  &:active { transform: translateY(4px); }
+}
+@keyframes starpop { 0% { transform: scale(.2) rotate(-30deg); opacity: 0 } 50% { transform: scale(1.4) rotate(10deg); opacity: 1 } 100% { transform: scale(1) translateY(-40px); opacity: 0 } }
+@utility anim-star { animation: starpop 1s ease-out forwards; }
+@keyframes wobble { 0%,100% { transform: translateX(0) } 25% { transform: translateX(-10px) } 75% { transform: translateX(10px) } }
+@utility anim-wobble { animation: wobble .4s ease-in-out 2; }

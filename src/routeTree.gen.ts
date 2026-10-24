@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as GameRouteImport } from './routes/game'
 import { Route as AuthenticatedGuruRouteImport } from './routes/_authenticated/guru'
 import { Route as MainBerandaRouteImport } from './routes/_main.beranda'
 import { Route as MainDiagnostikRouteImport } from './routes/_main.diagnostik'
@@ -40,6 +41,11 @@ const MainRoute = MainRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameRoute = GameRouteImport.update({
+  id: '/game',
+  path: '/game',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedGuruRoute = AuthenticatedGuruRouteImport.update({
@@ -96,6 +102,7 @@ const MainUjiRoute = MainUjiRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/game': typeof GameRoute
   '/guru': typeof AuthenticatedGuruRoute
   '/beranda': typeof MainBerandaRoute
   '/diagnostik': typeof MainDiagnostikRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/game': typeof GameRoute
   '/guru': typeof AuthenticatedGuruRoute
   '/beranda': typeof MainBerandaRoute
   '/diagnostik': typeof MainDiagnostikRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_main': typeof MainRouteWithChildren
   '/auth': typeof AuthRoute
+  '/game': typeof GameRoute
   '/_authenticated/guru': typeof AuthenticatedGuruRoute
   '/_main/beranda': typeof MainBerandaRoute
   '/_main/diagnostik': typeof MainDiagnostikRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/game'
     | '/guru'
     | '/beranda'
     | '/diagnostik'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/game'
     | '/guru'
     | '/beranda'
     | '/diagnostik'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_main'
     | '/auth'
+    | '/game'
     | '/_authenticated/guru'
     | '/_main/beranda'
     | '/_main/diagnostik'
@@ -190,6 +202,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   MainRoute: typeof MainRouteWithChildren
   AuthRoute: typeof AuthRoute
+  GameRoute: typeof GameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -220,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/game': {
+      id: '/game'
+      path: '/game'
+      fullPath: '/game'
+      preLoaderRoute: typeof GameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/guru': {
@@ -337,6 +357,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   MainRoute: MainRouteWithChildren,
   AuthRoute: AuthRoute,
+  GameRoute: GameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
