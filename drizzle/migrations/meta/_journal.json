@@ -43,6 +43,13 @@
       "when": 1792023985848,
       "tag": "0005_add_video_url",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792817175092,
+      "tag": "0006_allow_game_kind",
+      "breakpoints": true
     }
   ]
 }
