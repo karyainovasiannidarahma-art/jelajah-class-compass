@@ -218,7 +218,7 @@ export function Game({ level, avatar, onExit, onFinish }: { level: LevelId; avat
       <div ref={stageRef} className="relative flex-1 overflow-hidden">
         <div className="absolute inset-0" style={{ backgroundImage: `url(${BACKGROUNDS[meta?.bg ?? "garden"].src})`, backgroundSize: "auto 100%", backgroundRepeat: "repeat-x", backgroundPosition: `${-cam * scale * 0.5}px 0` }} />
         <div className="absolute inset-0" style={{ transform: `translateX(${-u(cam)}px)` }}>
-          <div className="absolute bg-grass" style={{ left: 0, width: u(FINISH_X + 80), top: u(GROUND), bottom: 0, boxShadow: "inset 0 8px 0 oklch(0.8 0.17 135)" }} />
+          <div className="absolute bg-grass" style={{ left: 0, width: u(FINISH_X + 80), top: u(GROUND), bottom: 0, boxShadow: "inset 0 8px 0 var(--secondary)" }} />
           {s.course.pits.map((p, i) => (
             <div key={i} className="absolute" style={{ left: u(p.x), width: u(p.w), top: u(GROUND), bottom: 0, background: "linear-gradient(var(--sky), oklch(0.45 0.12 245))" }}>
               <div className="absolute inset-x-0 bottom-0 text-center" style={{ fontSize: u(4) }}>〰️</div>
