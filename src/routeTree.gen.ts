@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GameRouteImport } from './routes/game'
+import { Route as PilihModeRouteImport } from './routes/pilih-mode'
 import { Route as AuthenticatedGuruRouteImport } from './routes/_authenticated/guru'
 import { Route as MainBerandaRouteImport } from './routes/_main.beranda'
 import { Route as MainDiagnostikRouteImport } from './routes/_main.diagnostik'
@@ -46,6 +47,11 @@ const AuthRoute = AuthRouteImport.update({
 const GameRoute = GameRouteImport.update({
   id: '/game',
   path: '/game',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PilihModeRoute = PilihModeRouteImport.update({
+  id: '/pilih-mode',
+  path: '/pilih-mode',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedGuruRoute = AuthenticatedGuruRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/game': typeof GameRoute
+  '/pilih-mode': typeof PilihModeRoute
   '/guru': typeof AuthenticatedGuruRoute
   '/beranda': typeof MainBerandaRoute
   '/diagnostik': typeof MainDiagnostikRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/game': typeof GameRoute
+  '/pilih-mode': typeof PilihModeRoute
   '/guru': typeof AuthenticatedGuruRoute
   '/beranda': typeof MainBerandaRoute
   '/diagnostik': typeof MainDiagnostikRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/auth': typeof AuthRoute
   '/game': typeof GameRoute
+  '/pilih-mode': typeof PilihModeRoute
   '/_authenticated/guru': typeof AuthenticatedGuruRoute
   '/_main/beranda': typeof MainBerandaRoute
   '/_main/diagnostik': typeof MainDiagnostikRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/game'
+    | '/pilih-mode'
     | '/guru'
     | '/beranda'
     | '/diagnostik'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/game'
+    | '/pilih-mode'
     | '/guru'
     | '/beranda'
     | '/diagnostik'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/_main'
     | '/auth'
     | '/game'
+    | '/pilih-mode'
     | '/_authenticated/guru'
     | '/_main/beranda'
     | '/_main/diagnostik'
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   MainRoute: typeof MainRouteWithChildren
   AuthRoute: typeof AuthRoute
   GameRoute: typeof GameRoute
+  PilihModeRoute: typeof PilihModeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/game'
       fullPath: '/game'
       preLoaderRoute: typeof GameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pilih-mode': {
+      id: '/pilih-mode'
+      path: '/pilih-mode'
+      fullPath: '/pilih-mode'
+      preLoaderRoute: typeof PilihModeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/guru': {
@@ -358,6 +378,7 @@ const rootRouteChildren: RootRouteChildren = {
   MainRoute: MainRouteWithChildren,
   AuthRoute: AuthRoute,
   GameRoute: GameRoute,
+  PilihModeRoute: PilihModeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
